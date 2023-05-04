@@ -52,30 +52,20 @@ const likes = [];
       }
     });
     // //Dès que l'utilisateur modifie la valeur de trie des medias on appelle la fonction orderMedias qui retrie les medias en fonction de la nouvelle valeur de tri
-    const menuChange = dropdown.querySelector(".menu");
     const date = document.getElementById("date");
     const title = document.getElementById("title");
     const pop = document.getElementById("pop");
 
-    menuChange.addEventListener("click", (event) => {
-      console.log(event);
-      if ((event.target = date)) {
-        orderMedias(photographer, (orderBy = "date"));
-      }
+    date.addEventListener("click", () => {
+      orderMedias(photographer, (orderBy = "date"));
     });
 
-    menuChange.addEventListener("click", (event) => {
-      console.log(event);
-      if ((event.target = title)) {
-        orderMedias(photographer, (orderBy = "title"));
-      }
+    title.addEventListener("click", () => {
+      orderMedias(photographer, (orderBy = "title"));
     });
 
-    menuChange.addEventListener("click", (event) => {
-      console.log(event);
-      if ((event.target = pop)) {
-        orderMedias(photographer, (orderBy = "pop"));
-      }
+    pop.addEventListener("click", () => {
+      orderMedias(photographer, (orderBy = "pop"));
     });
 
     //on va chercher le titre qui se situe dans contact modal dans le DOM
