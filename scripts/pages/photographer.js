@@ -4,7 +4,7 @@ const photographerId = +searchParams.get("id");
 let photographer;
 let orderBy = "title";
 let medias;
-const likes = [];
+// const likes = [];
 
 //  on crée une fonction pour récupérer les infos du photographe
 (async () => {
@@ -170,30 +170,23 @@ function displayMedias(photographer, medias) {
 
     spanName.textContent = media.title;
     spanLike.textContent = media.likes + " ♥";
+
     //on crée un évènement qui écoute le click sur l'icone like et qui incrémente le nombre de like
-    spanLike.onclick = ({ target }) => {
-      //Si notre tableau de like contient déjà l'id du média, on retire le like au click
-      if (!likes.includes(media.id)) {
-        const totalLikesElement = document.querySelector(
-          ".photograph_likeprice > span:first-child"
-        );
-        totalLikesElement.textContent =
-          parseInt(totalLikesElement.textContent) + 1 + " ♥";
-        target.textContent = parseInt(target.textContent) + 1 + " ♥";
-        //on ajoute le media dans le tableau
-        likes.push(media.id);
+    let isLiked = false;
+    let likesCount = media.likes;
+
+    spanLike.addEventListener("click", () => {
+      if (!isLiked) {
+        spanLike.classList.add("active");
+        likesCount++;
+        spanLike.textContent = likesCount + " ♥";
+      } else {
+        spanLike.classList.remove("active");
+        likesCount--;
+        spanLike.textContent = likesCount + " ♥";
       }
-      return;
-      // if (likes.includes(media.id)) {
-      //   const totalLikesElement = document.querySelector(
-      //     ".photograph_likeprice > span:first-child"
-      //   );
-      //   totalLikesElement.textContent =
-      //     parseInt(totalLikesElement.textContent) - 1 + " ♥";
-      //   target.textContent = parseInt(target.textContent) - 1 + " ♥";
-      //   likes.shift(media.id);
-      // }
-    };
+      isLiked = !isLiked;
+    });
 
     //Quand on click sur la photo on la clone et on l'ajoute a la modal
     //on va donc sélectionner le dernier enfant de la modal qui est la div vide et lui copier la photo cloner

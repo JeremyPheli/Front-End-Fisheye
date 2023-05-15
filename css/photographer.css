@@ -134,16 +134,18 @@
 }
 
 .select {
-	background: #901c1c;
-	color: white;
+	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	cursor: pointer;
-	height: 50px;
-	width: 150px;
-	padding: 5px 13px;
+	height: 70px;
+	width: 176px;
+	padding: 11px;
+	font-size: 20px;
+	color: white;
+	border: none;
 	border-radius: 5px;
+	background-color: #901c1c;
 }
 
 .caret-rotate {
