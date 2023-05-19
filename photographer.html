@@ -51,19 +51,23 @@
   <div id="contact_modal">
     <div class="modal">
       <header>
-        <h2>Contactez-moi</h2>
-        <img src="./assets/icons/close.svg" alt="Close Contact form" onclick="closeModal()" />
+        <h2 class="modal-title">Contactez-moi</h2>
+        <img src="./assets/icons/close.svg" alt="Close Contact form" class ="close-btn" onclick="closeModal()" />
       </header>
-      <form onsubmit="sendMessage(event)">
-        <div>
+      <form class="modal-form" id="contact">
+        <div class="modal-form">
           <label for="firstName">Prénom</label>
-          <input id="firstName" name="firstName" />
+          <input class="firstName" name="firstName" />
+          <span class="message-alert">Vous devez entrer votre prénom!</span>
           <label for="lastName">Nom</label>
-          <input id="lastName" name="lastName" />
+          <input class="lastName" name="lastName" />
+          <span class="message-alert">Vous devez entrer votre nom!</span>
           <label for="email">Email</label>
-          <input id="email" name="email" />
+          <input class="email" name="email" />
+          <span class="message-alert">Vous devez entrer un email valide!</span>
           <label for="message">Message</label>
-          <textarea id="message" name="message"></textarea>
+          <textarea class="message" name="message"></textarea>
+          <span class="message-alert">Vous devez entrer un message!</span>
         </div>
         <button class="contact_button" aria-label="Send">Envoyer</button>
       </form>

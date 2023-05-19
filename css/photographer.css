@@ -272,7 +272,7 @@
 }
 
 .modal header h2 {
-	font-size: 64px;
+	font-size: 44px;
 	font-weight: normal;
 	text-align: center;
 }
@@ -311,4 +311,19 @@ form textarea {
 	border-radius: 5px;
 	resize: vertical;
 }
+
+.echec {
+	animation: echec 0.3s ease-in-out;
+  }
+  
+  .border {
+	border: 0.3rem solid #901c1c;
+  }
+
+  .message-alert {
+	color: #901c1c;
+	font-size: 1.3rem;
+	margin-top: 0.5rem;
+	display: none;
+  }
 

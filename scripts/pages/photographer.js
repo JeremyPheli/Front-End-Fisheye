@@ -4,7 +4,6 @@ const photographerId = +searchParams.get("id");
 let photographer;
 let orderBy = "title";
 let medias;
-// const likes = [];
 
 //  on crée une fonction pour récupérer les infos du photographe
 (async () => {
@@ -27,6 +26,8 @@ let medias;
     fillHeader(photographer);
     //on appelle la fonction displayLikePrice qui affiche le nombre de likes et le tarif journalier du photographe
     displayLikePrice(medias, photographer.price);
+    // on apelle la fonction verifModal qui verifie les informations rentrées dans les champs du formulaire de contact
+    verifModal(photographer);
     //on cree un évenement qui verifie que la modal est affiché
     addEventListener("keydown", (event) => {
       if (media_modal.style.display !== "none") {
@@ -69,7 +70,7 @@ let medias;
     });
 
     //on va chercher le titre qui se situe dans contact modal dans le DOM
-    const contactTitle = document.querySelector("#contact_modal h2");
+    const contactTitle = document.querySelector(".modal-title");
     //on ajoute le nom du photographe au titre de la modal
     contactTitle.textContent += " " + photographer.name;
     //on definie une erreur si le fetch ne fonctionne pas
@@ -296,3 +297,115 @@ options.forEach((option) => {
     option.classList.add("active");
   });
 });
+
+// On crée une fonction pour vérifier les champs dans la modal
+
+function verifModal(photographer) {
+  const formFirstName = document.querySelector(".firstName");
+  const formLastName = document.querySelector(".lastName");
+  const formEmail = document.querySelector(".email");
+  const formMsg = document.querySelector(".message");
+  const errorMessage = document.querySelectorAll(".message-alert");
+
+  let verifFirst;
+  let verifLast;
+  let verifMail;
+  let verifMsg;
+
+  // on verifie si les champs de la modal sont bien rempli
+  formFirstName.addEventListener("input", (e) => {
+    if (e.target.value.length <= 3) {
+      errorMessage[0].style.display = "inline";
+      formFirstName.classList.add("echec");
+      formFirstName.classList.add("border");
+
+      setTimeout(() => {
+        formFirstName.classList.remove("echec");
+        formFirstName.classList.remove("border");
+      }, 500);
+      verifFirst = false;
+    } else {
+      errorMessage[0].style.display = "none";
+      verifFirst = true;
+    }
+  });
+  formLastName.addEventListener("input", (e) => {
+    if (e.target.value.length <= 3) {
+      errorMessage[1].style.display = "inline";
+      formLastName.classList.add("echec");
+      formLastName.classList.add("border");
+
+      setTimeout(() => {
+        formLastName.classList.remove("echec");
+        formLastName.classList.remove("border");
+      }, 500);
+      verifLast = false;
+    } else {
+      errorMessage[1].style.display = "none";
+      verifLast = true;
+    }
+  });
+  formEmail.addEventListener("input", (e) => {
+    const regexMail = /\S+@\S+\.\S+/;
+    if (e.target.value.search(regexMail) === 0) {
+      errorMessage[2].style.display = "none";
+      verifMail = true;
+    } else if (e.target.value.search(regexMail) === -1) {
+      errorMessage[2].style.display = "inline";
+      formEmail.classList.add("echec");
+      formEmail.classList.add("border");
+
+      setTimeout(() => {
+        formEmail.classList.remove("echec");
+        formEmail.classList.remove("border");
+      }, 500);
+      verifMail = false;
+    }
+  });
+
+  formMsg.addEventListener("input", (e) => {
+    if (e.target.value.length <= 3) {
+      errorMessage[3].style.display = "inline";
+      formMsg.classList.add("echec");
+      formMsg.classList.add("border");
+
+      setTimeout(() => {
+        formMsg.classList.remove("echec");
+        formMsg.classList.remove("border");
+      }, 500);
+      verifMsg = false;
+    } else {
+      errorMessage[3].style.display = "none";
+      verifMsg = true;
+    }
+  });
+
+  // submit form
+  document.getElementById("contact").addEventListener("submit", function (e) {
+    console.log("envoyer");
+    e.preventDefault();
+    if (
+      verifFirst === true &&
+      verifLast === true &&
+      verifMail === true &&
+      verifMsg === true
+    ) {
+      const contactModal = document.querySelector(".modal");
+      const modalTitle = document.querySelector(".modal-title");
+      const close = document.querySelector(".close-btn");
+      const bannerModal = document.querySelector(".modal-form");
+      console.log(bannerModal);
+      bannerModal.style.display = "none";
+      bannerModal.setAttribute("aria-hidden", "true");
+      close.focus();
+      modalTitle.innerHTML = `Votre message a bien été envoyé à <br>${photographer.name} `;
+      modalTitle.classList.add("message-valid");
+
+      // log les informations entrée par l'utilisateur
+      let datas = new FormData(bannerModal);
+      for (let i of datas.entries()) {
+        console.log(i[0], ":", i[1]);
+      }
+    }
+  });
+}
